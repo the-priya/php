@@ -6,7 +6,7 @@
         body {
             font-family: Arial, sans-serif;
             text-align: left;
-            background-image: linear-gradient(#fff, seagreen);
+            background-image: linear-gradient(#fff, blue);
         }
 
         .container {
@@ -108,25 +108,30 @@ input[type="checkbox"] {
 <body>
     <div class="container">
         <h2 align="center">Sign Up</h2>
-        <form action="javascript:void(0);" onsubmit="redirectToLogin()">   
         <?php
-        if ($_SERVER["REQUEST_METHOD"] == "POST")
+        if ($_SERVER["REQUEST_METHOD"] == "POST") 
         {
-            $name = $_POST['Fullname'];
+            $name = $_POST['name'];
             $username = $_POST['username'];
             $password = $_POST['password'];
-            $confirmPassword=$_POST['confirmPassword'];
+            $confirmPassword = $_POST['confirmPassword'];
             $email = $_POST['email'];
             $phone = $_POST['phone'];
             $bdate = $_POST['bdate'];
-
-                if ($password === $confirmPassword) 
-                {
-                     header("Location: http://localhost:3000/login.php",true,301);
-                     exit;
-                }
+            if ($password === $confirmPassword) 
+            {
+                header("Location: login.php?username=$username&password=$password");
+                exit;
+            }
+            else 
+            {
+                echo '<div style="color: red;">Passwords do not match. Please try again.</div>';
+            }
         }
         ?>
+        <form action="javascript:void(0);" onsubmit="redirectToLogin()">   
+       
+<div>
 		<label for="Fullname">FullName</label>
 		<input type="text" id="Fullname" name="Fullname" placeholder="Enter your full name" required>
 </div>
@@ -156,6 +161,11 @@ input[type="checkbox"] {
 <div>
 		<label for="bdate">Date of birth</label>
 		<input type="date" id="bdate" name="bdate" >
+</div>
+<div>
+        <label for="gender">Gender</label>
+        <input type="radio" name="gender" value="male">male
+        <input type="radio" name="gender" value="female">female
 </div>
 
 <div>
